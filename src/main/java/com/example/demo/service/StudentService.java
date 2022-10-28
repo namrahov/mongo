@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.document.Point;
 import com.example.demo.dao.document.Student;
 import com.example.demo.dao.repository.LightStudentRedisRepo;
+import com.example.demo.dao.repository.PointRepository;
 import com.example.demo.dao.repository.StudentRepository;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.model.LightStudent;
@@ -14,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,6 +27,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final LightStudentRedisRepo lightStudentRedisRepo;
+    private final PointRepository pointRepository;
 
     public PageableStudentDto getPageableStudent(Integer page, Integer count, String firstName) {
         Pageable pageable = PageRequest.of(page, count, Sort.by("createdAt").descending());
@@ -56,6 +58,8 @@ public class StudentService {
     }
 
     public Student createStudent(StudentDto dto) {
+        Point point = new Point();
+        point.setValue(dto.getPoint().getValue());
 
         Student student = Student.builder()
                 .firstName(dto.getFirstName())
@@ -66,16 +70,17 @@ public class StudentService {
                 .favouriteSubject(dto.getFavouriteSubject())
                 .totalSpentInBooks(dto.getTotalSpentInBooks())
                 .createdAt(LocalDateTime.now())
+                .point(point)
                 .build();
 
-        return studentRepository.insert(student);
+        return studentRepository.save(student);
     }
 
-    public Student findStudentByEmail(String email) {
+   /* public Student findStudentByEmail(String email) {
         return studentRepository.findStudentByEmail(email).orElseThrow(() -> {
             throw new RuntimeException("STUDENT_NOT_FOUND");
         });
-    }
+    }*/
 
     public Student findStudentMaxTotalSpentInBooks() {
         return studentRepository.findFirstByOrderByTotalSpentInBooksDesc();

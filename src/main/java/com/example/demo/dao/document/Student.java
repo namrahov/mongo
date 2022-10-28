@@ -2,12 +2,14 @@ package com.example.demo.dao.document;
 
 import com.example.demo.model.Address;
 import com.example.demo.model.enums.Gender;
+import io.github.kaiso.relmongo.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -33,6 +35,10 @@ public class Student {
     private List<String> favouriteSubject;
     private BigDecimal totalSpentInBooks;
     private LocalDateTime createdAt;
+
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinProperty(name="point")
+    private Point point;
 
 
 }

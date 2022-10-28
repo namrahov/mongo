@@ -1,0 +1,16 @@
+ {
+        "firstName":"Huseyin",
+        "lastName":"Keremov",
+        "email":"kerem@gmail.com",
+        "gender":"MALE",
+        "address":{
+            "country":"Azerbaijan",
+            "city":"Baku",
+            "postCode":"AZ5012"
+        },
+        "favouriteSubject":["Geography"],
+        "totalSpentInBooks": 2222,
+        "point": {
+            "value": 3.3
+        }
+ }

@@ -41,9 +41,10 @@ public class StudentController {
         return studentService.createStudent(dto);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public Student findStudentByEmail(@PathVariable String email) {
-        return studentService.findStudentByEmail(email);
+        //return studentService.findStudentByEmail(email);
+        return null;
     }
 
     @GetMapping("/max-total-spent-in-books")
@@ -70,5 +71,8 @@ public class StudentController {
     public LightStudent findByIdFromRedis(@PathVariable int id) {
         return studentService.findByIdFromRedis(id);
     }
+
+
+
 
 }
