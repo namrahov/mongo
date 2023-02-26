@@ -2,6 +2,9 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,8 +20,13 @@ public class RedisConfiguration {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName("localhost");
         configuration.setPort(6379);
+
+        RedisClusterConfiguration clusterConf = new RedisClusterConfiguration();
+        clusterConf.setPassword(RedisPassword.of("hecbirsey"));
+
         return new JedisConnectionFactory(configuration);
     }
+
 
     @Bean
     public RedisTemplate<String, Object> template() {
